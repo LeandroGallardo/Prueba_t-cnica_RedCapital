@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.5.0",
     "core-js": "^3.6.4",
+    "md5": "^2.2.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {

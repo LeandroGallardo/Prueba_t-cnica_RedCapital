@@ -7,16 +7,20 @@
       <div class="col-lg-6 col-sm-12 col-md-10 m-auto">
         <form action="">
           <div class="form-group">
-            <label for="nombre" class="h5">Nombre</label>
+            <label for="nombre" class="h5">Rut</label>
             <input type="text" class="form-control" id="nombre" v-model="msg" />
           </div>
           <div class="form-group">
             <label for="nombre" class="h5">Contraseña</label>
             <input type="password" class="form-control" v-model="pass" />
           </div>
-          <button type="submit" class="btn btn-primary mb-2 w-100 ">
+          <button type="button" class="btn btn-primary mb-2 w-100" v-on:click="saludar">
             <span class="h5">Enviar</span>
           </button>
+          <div>
+            <h5 class="h5 loading" id="loading" v-if="loading"><i class="fas fa-circle-notch fa-spin"></i> Cargando... </h5>
+          </div>
+          <h5 class="h5 user" id="userlogin" v-if="userlogin">{{ userlogin }}</h5>
         </form>
       </div>
     </div>
@@ -25,30 +29,54 @@
 
 <script>
 import axios from 'axios';
+import md5 from 'md5';
 export default {
-  date() {
+  data() {
     return {
       name: "Login",
       props: {
         msg: String,
-        pass: String,
-      }
+        pass: String
+      },
+      loading: false,
+      userlogin: null
     }
   },
   mounted() {
-    axios
-      .post('https://crm.redcapital.cl/api/login',{
-        "rut": "16460269-9",
-        "password": "123qwe",
-        "remember_me": 1
-      })
-      .then(response => {
-        console.log(response);
-        console.log(response.data.message);
-      })
-      .catch(error => {
+  },
+  methods: {
+    saludar: async function(event) {
+      event.preventDefault();
+      this.loading= true;
+      try{ 
+       await axios
+        .post('https://crm.redcapital.cl/api/login',{
+          "rut": this.msg,
+          "password": this.pass,
+          "remember_me": 1
+        })
+        .then(response => {
+          console.log(response.data.message);
+          if(response.data.message === 'success login'){
+            window.localStorage.clear();
+            window.localStorage.setItem('rut',this.msg);
+            window.localStorage.setItem('pass',md5(this.pass));
+            this.userlogin= response.data.message;
+          }
+          else{
+            this.userlogin= response.data[0];
+          }
+          this.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+          this.loading=false;
+        });
+
+      }catch (error){
         console.log(error);
-      })
+      }
+    }
   }
 }
 </script>
