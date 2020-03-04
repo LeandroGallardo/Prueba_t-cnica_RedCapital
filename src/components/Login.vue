@@ -1,5 +1,7 @@
 <template>
-  <div class="container d-flex justify-content-center align-items-center flex-column">
+  <div
+    class="container d-flex justify-content-center align-items-center flex-column"
+  >
     <div class="row justify-content-center w-100">
       <img alt="Red Capital" src="../assets/logo-redcapital.jpg" />
     </div>
@@ -14,7 +16,11 @@
             <label for="nombre" class="h5">Contraseña</label>
             <input type="password" class="form-control" v-model="pass" />
           </div>
-          <button type="button" class="btn btn-primary mb-2 w-100" v-on:click="saludar">
+          <button
+            type="button"
+            class="btn btn-primary mb-2 w-100"
+            v-on:click="saludar"
+          >
             <span class="h5">Enviar</span>
           </button>
           <div>
