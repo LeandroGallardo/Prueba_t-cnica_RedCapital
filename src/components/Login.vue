@@ -36,6 +36,7 @@
 <script>
 import axios from 'axios';
 import md5 from 'md5';
+import router from "../router";
 export default {
   data() {
     return {
@@ -68,18 +69,20 @@ export default {
             window.localStorage.setItem('rut',this.msg);
             window.localStorage.setItem('pass',md5(this.pass));
             this.userlogin= response.data.message;
-          }
-          else{
+           // router.push({ name: 'post' ,params: {title: 'test title' } })
+              router.push({ name: 'post', params: {id: this.msg, pass: this.pass}})
+
+            } else {
             this.userlogin= response.data[0];
           }
           this.loading = false;
         })
         .catch(error => {
           console.log(error);
-          this.loading=false;
+            this.loading = false;
         });
 
-      }catch (error){
+      } catch (error) {
         console.log(error);
       }
     }

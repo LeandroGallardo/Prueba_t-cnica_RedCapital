@@ -13,7 +13,8 @@ export default new Router({
     },{
       path:'/post',
       name:'post',
-      component: Post
+      component: Post,
+      props: true
     }
   ]
 })
