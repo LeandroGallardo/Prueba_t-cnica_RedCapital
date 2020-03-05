@@ -63,15 +63,12 @@ export default {
           "remember_me": 1
         })
         .then(response => {
-          console.log(response.data.message);
           if(response.data.message === 'success login'){
             window.localStorage.clear();
             window.localStorage.setItem('rut',this.msg);
             window.localStorage.setItem('pass',md5(this.pass));
             this.userlogin= response.data.message;
-           // router.push({ name: 'post' ,params: {title: 'test title' } })
               router.push({ name: 'post', params: {id: this.msg, pass: this.pass}})
-
             } else {
             this.userlogin= response.data[0];
           }
@@ -81,7 +78,6 @@ export default {
           console.log(error);
             this.loading = false;
         });
-
       } catch (error) {
         console.log(error);
       }
@@ -92,7 +88,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container{
+.container {
   height: 100vh;
 }
 
